@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>pra ela ♥</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            line-height: 1.6;
+            overflow-x: hidden;
+            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 50%, #fecfef 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 15px;
+        }
+
+        .floating-hearts {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .heart {
+            position: absolute;
+            color: rgba(255, 192, 203, 0.4);
+            font-size: 20px;
+            animation: float 8s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { 
+                transform: translateY(100vh) rotate(0deg); 
+                opacity: 0; 
+            }
+            10%, 90% { 
+                opacity: 1; 
+            }
+            50% { 
+                transform: translateY(-100px) rotate(180deg); 
+            }
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            position: relative;
+            z-index: 2;
+            padding: 20px 0;
+        }
+
+        .header h1 {
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            color: #ff69b4;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+            margin-bottom: 10px;
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes glow {
+            from { 
+                text-shadow: 0 0 20px rgba(255, 105, 180, 0.5); 
+            }
+            to { 
+                text-shadow: 0 0 30px rgba(255, 105, 180, 0.8); 
+            }
+        }
+
+        .header p {
+            font-size: clamp(1rem, 3vw, 1.3rem);
+            color: rgba(255, 255, 255, 0.9);
+            font-style: italic;
+        }
+
+        .declaration {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: clamp(20px, 5vw, 40px);
+            margin-bottom: 50px;
+            box-shadow: 0 15px 30px rgba(255, 105, 180, 0.2);
+            position: relative;
+            z-index: 2;
+            border: 2px solid rgba(255, 182, 193, 0.3);
+        }
+
+        .declaration h2 {
+            color: #ff69b4;
+            font-size: clamp(1.5rem, 4vw, 2.5rem);
+            margin-bottom: 25px;
+            text-align: center;
+            font-weight: 300;
+        }
+
+        .declaration p {
+            font-size: clamp(1rem, 2vw, 1.2rem);
+            color: #2d3748;
+            margin-bottom: 15px;
+            text-align: justify;
+            line-height: 1.8;
+        }
+
+        .signature {
+            text-align: right;
+            margin-top: 25px;
+            font-style: italic;
+            color: #ff69b4;
+            font-size: clamp(0.9rem, 2vw, 1.1rem);
+        }
+
+        .photos-section, .music-section {
+            position: relative;
+            z-index: 2;
+            margin-bottom: 50px;
+        }
+
+        .photos-title, .music-title {
+            text-align: center;
+            color: #eb7ab2;
+            font-size: clamp(1.8rem, 4vw, 2.5rem);
+            margin-bottom: 30px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .photo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin-bottom: 50px;
+        }
+
+        .photo-card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 25px rgba(255, 105, 180, 0.2);
+            transition: all 0.4s ease;
+            border: 2px solid rgba(255, 182, 193, 0.3);
+            position: relative;
+        }
+
+        .photo-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(255, 105, 180, 0.3);
+            border-color: #ff69b4;
+        }
+
+        .photo-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .photo-card:hover img {
+            transform: scale(1.05);
+            filter: brightness(1.1);
+        }
+
+        .photo-caption {
+            padding: 15px;
+            text-align: center;
+            background: linear-gradient(135deg, #fff0f5, #ffe4e1);
+        }
+
+        .photo-caption h3 {
+            color: #ff69b4;
+            margin-bottom: 8px;
+            font-size: clamp(1rem, 2.5vw, 1.3rem);
+        }
+
+        .photo-caption p {
+            color: #8b4367;
+            font-style: italic;
+            line-height: 1.6;
+            font-size: clamp(0.8rem, 2vw, 1rem);
+        }
+
+        /* Estilos para a seção de música */
+        .music-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 25px;
+            margin-bottom: 50px;
+        }
+
+        .music-card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 25px rgba(255, 105, 180, 0.2);
+            transition: all 0.4s ease;
+            border: 2px solid rgba(255, 182, 193, 0.3);
+            cursor: pointer;
+            text-decoration: none;
+            color: inherit;
+            position: relative;
+        }
+
+        .music-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 25px 50px rgba(255, 105, 180, 0.4);
+            border-color: #ff69b4;
+        }
+
+        .music-card::before {
+            content: '🎵';
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            font-size: 20px;
+            z-index: 3;
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+
+        .music-card:hover::before {
+            opacity: 1;
+            transform: rotate(15deg);
+        }
+
+        .album-cover {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            transition: all 0.4s ease;
+            position: relative;
+        }
+
+        .music-card:hover .album-cover {
+            filter: brightness(1.1) saturate(1.2);
+            transform: scale(1.05);
+        }
+
+        .play-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 200px;
+            background: rgba(0, 0, 0, 0.4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+
+        .music-card:hover .play-overlay {
+            opacity: 1;
+        }
+
+        .play-button {
+            width: 60px;
+            height: 60px;
+            background: #1DB954;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 24px;
+            transform: scale(0.8);
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(29, 185, 84, 0.4);
+        }
+
+        .music-card:hover .play-button {
+            transform: scale(1);
+        }
+
+        .music-info {
+            padding: 20px;
+            background: linear-gradient(135deg, #fff0f5, #ffe4e1);
+            text-align: center;
+        }
+
+        .song-title {
+            color: #ff69b4;
+            font-size: clamp(1rem, 2.5vw, 1.2rem);
+            font-weight: bold;
+            margin-bottom: 8px;
+            line-height: 1.3;
+        }
+
+        .artist-name {
+            color: #8b4367;
+            font-size: clamp(0.9rem, 2vw, 1rem);
+            margin-bottom: 10px;
+            opacity: 0.8;
+        }
+
+        .dedication {
+            color: #ff69b4;
+            font-style: italic;
+            font-size: clamp(0.8rem, 1.8vw, 0.95rem);
+            line-height: 1.4;
+            border-top: 1px solid rgba(255, 105, 180, 0.2);
+            padding-top: 10px;
+        }
+
+        .spotify-logo {
+            width: 20px;
+            height: 20px;
+            margin-right: 8px;
+            vertical-align: middle;
+        }
+
+        .final-message {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: clamp(20px, 5vw, 40px);
+            text-align: center;
+            box-shadow: 0 15px 30px rgba(255, 105, 180, 0.2);
+            border: 2px solid rgba(255, 182, 193, 0.3);
+        }
+
+        .final-message h2 {
+            color: #ff69b4;
+            font-size: clamp(1.5rem, 4vw, 2.2rem);
+            margin-bottom: 15px;
+        }
+
+        .final-message p {
+            font-size: clamp(1rem, 3vw, 1.3rem);
+            color: #8b4367;
+            margin-bottom: 15px;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+            100% { transform: scale(1); }
+        }
+
+        @keyframes sparkleAnimation {
+            0% { 
+                transform: scale(0) rotate(0deg);
+                opacity: 1;
+            }
+            100% { 
+                transform: scale(1.5) rotate(180deg);
+                opacity: 0;
+            }
+        }
+
+        @keyframes musicNote {
+            0% { 
+                transform: translateY(0) rotate(0deg);
+                opacity: 1;
+            }
+            100% { 
+                transform: translateY(-50px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* Responsividade específica */
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            .photo-grid, .music-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .photo-card img, .album-cover {
+                height: 180px;
+            }
+            
+            .heart {
+                font-size: 16px;
+            }
+
+            .music-card {
+                max-width: 100%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .declaration, .final-message {
+                padding: 15px;
+            }
+            
+            .photo-card img, .album-cover {
+                height: 150px;
+            }
+            
+            .photo-caption, .music-info {
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="floating-hearts">
+        <div class="heart" style="left: 10%; animation-delay: 0s;">💕</div>
+        <div class="heart" style="left: 20%; animation-delay: 1s;">💖</div>
+        <div class="heart" style="left: 30%; animation-delay: 2s;">💕</div>
+        <div class="heart" style="left: 40%; animation-delay: 3s;">💗</div>
+        <div class="heart" style="left: 50%; animation-delay: 4s;">💕</div>
+        <div class="heart" style="left: 60%; animation-delay: 5s;">💖</div>
+        <div class="heart" style="left: 70%; animation-delay: 1.5s;">💕</div>
+        <div class="heart" style="left: 80%; animation-delay: 2.5s;">💗</div>
+        <div class="heart" style="left: 90%; animation-delay: 3.5s;">💕</div>
+    </div>
+
+    <div class="container">
+        <header class="header">
+            <h1>Parabéns, Isyss! 💕</h1>
+            <p>Uma declaração especial no seu dia especial</p>
+        </header>
+
+        <section class="declaration">
+            <h2>Minha Declaração de Amor</h2>
+            <p>Hoje é o seu aniversário, e meu coração transborda de alegria por poder celebrar ao seu lado. Você é a luz que brilha meus dias e a razão pela qual eu sorrio todos os dias.</p>  
+            <p>Cada momento ao seu lado é um presente divino. Sua voz é o melhor som para meus ouvidos, seus olhos são como estrelas que guiam meu caminho e ditam oque eu devo fazer, e seu amor é aonde encontro paz e felicidade.</p>
+            <p>Neste dia especial, quero que saiba que você é única, extraordinária e absolutamente perfeita do jeito que é. Obrigado por ser quem você é, por me amar como eu sou e por fazer da nossa história algo tão belo e especial.</p>
+            <p>Que neste novo ano de vida seja repleto de realizações, sorrisos, conquistas e momentos inesquecíveis. Estou sempre aqui, ao seu lado, pra comemorar cada vitória e apoiar você em cada desafio.</p>
+            <p>Te amo mais do que as palavras podem expressar. Você é meu amor, minha vida.</p>
+            
+            <div class="signature">
+                Com todo meu amor,<br>
+                Marolli 💕
+            </div>
+        </section>
+
+        <section class="music-section">
+            <h2 class="music-title">Músicas que Dedico para Você </h2>
+            <div class="music-grid">
+                <a href="https://open.spotify.com/intl-pt/track/4SpqtLElDsO6KGbd4ub96Z?si=50b64d9cdc6443f7" target="_blank" class="music-card">
+                    <div style="position: relative;">
+                        <img src="img/pela.jpeg" alt="Perfect - Ed Sheeran" class="album-cover" style="height: auto;">
+                        <div class="play-overlay">
+                            <div class="play-button">▶</div>
+                        </div>
+                    </div>
+                    <div class="music-info">
+                        <div class="song-title">Pela Luz dos Olhos Teus</div>
+                        <div class="artist-name">Antônio Carlos Jobim e Miúcha</div>
+                        <div class="dedication">"Ai que bom que isso é meu Deus Que frio que me dá o encontro desse olhar"</div>
+                    </div>
+                </a>
+
+                <a href= "https://open.spotify.com/intl-pt/track/3iof6EclqePezHDibBiykI?si=a18faf9d2ca54a8a" target="_blank" class="music-card">
+                    <div style="position: relative;">
+                        <img src="img/djavn.jpeg" alt="All of Me - John Legend" class="album-cover" style="height: auto;">
+                        <div class="play-overlay">
+                            <div class="play-button">▶</div>
+                        </div>
+                    </div>
+                    <div class="music-info">
+                        <div class="song-title">Oceano</div>
+                        <div class="artist-name">Djavan</div>
+                        <div class="dedication">"Vem me fazer feliz porque eu te amo
+Você deságua em mim, e eu, oceano"</div>
+                    </div>
+                </a>
+
+                <a href="https://open.spotify.com/intl-pt/track/6MCaOLDl0epJPRN76H5S4N?si=fe5feea9c1614561" target="_blank" class="music-card">
+                    <div style="position: relative;">
+                        <img src="img/força.jpeg" alt="Marry Me - Bruno Mars" class="album-cover" style="height: auto;">
+                        <div class="play-overlay">
+                            <div class="play-button">▶</div>
+                        </div>
+                    </div>
+                    <div class="music-info">
+                        <div class="song-title">Oba, Lá Vem Ela</div>
+                        <div class="artist-name">Jorge Ben Jor</div>
+                        <div class="dedication">"Não me importo que falem, que pensem
+Pois sem saber ela é minha alegria</div>
+                    </div>
+                </a>
+
+        
+
+                <a href="https://open.spotify.com/intl-pt/track/4zEvxRDaKDoFlHxK7Hy0wg?si=02525ae886bb48c9" target="_blank" class="music-card">
+                    <div style="position: relative;">
+                        <img src="img/the.webp" alt="Make You Feel My Love - Adele" class="album-cover" style="height: auto;">
+                        <div class="play-overlay">
+                            <div class="play-button">▶</div>
+                        </div>
+                    </div>
+                    <div class="music-info">
+                        <div class="song-title">Sunday</div>
+                        <div class="artist-name">The Cranberries</div>
+                        <div class="dedication">"And I couldn't find the words to say, "I love you"
+And I couldn't find the time to say, "I need you"</div>
+                    </div>
+                </a>
+
+        </section>
+
+        <section class="photos-section">
+            <h2 class="photos-title">Fotinhas de noizi hihi</h2>
+            <div class="photo-grid">
+                <div class="photo-card">
+                    <img src="img/hihi.jpg" alt="Nosso Primeiro Encontro" style="height: auto">
+                    <div class="photo-caption">
+                        <h3>Primeiro Contato com a Cabeçuda</h3>
+                        <p>Já estava perdidamente apaixonado rs</p>
+                    </div>
+                </div>
+
+                <div class="photo-card">
+                    <img src="img/hihi2.jpg" alt="Momento Mágico" style="height: auto">
+                    <div class="photo-caption">
+                        <h3>Momentos com meu amorzinho hihi</h3>
+                        <p>Aqueles primeiros momentos com você.</p>
+                    </div>
+                </div>
+
+                <div class="photo-card">
+                    <img src="img/hihi3.jpg " alt="Puro Amor" style="height: auto;">
+                    <div class="photo-caption">
+                        <h3>Eu te amo minha princesa linda</h3>
+                        <p>Meu amor por você aumenta em cada dia que passa.</p>
+                    </div>
+                </div>
+
+                <div class="photo-card">
+                    <img src="img/hihi4.jpg" alt="Risadas e Alegria" style="height: auto;">
+                    <div class="photo-caption">
+                        <h3>Fotos só suas pq simm</h3>
+                        <p>meu amor por você só aumenta cada dia que passa</p>
+                    </div>
+                </div>
+
+                <div class="photo-card">
+                    <img src="img/hihi5.jpg" alt="Nosso Presente" style="height: auto;">
+                    <div class="photo-caption">
+                        <h3>MEU DEUS</h3>
+                        <p>A mulher da foto acima é dona do meu coração.</p>
+                    </div>
+                </div>
+
+                <div class="photo-card">
+                    <img src="img/hihi6.jpg" alt="Nosso Futuro" style="height: auto;">
+                    <div class="photo-caption">
+                        <h3>Eu amo esta mulher 💕</h3>
+                        <p>E espero que temos uma vida feliz juntos</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="final-message">
+            <h2>Feliz Aniversário Isysss, Aproveita seu dia! </h2>
+            <p>Que este dia seja tão especial quanto você é para mim.</p>
+            <p>Te amo infinitamente 💕</p>
+        </section>
+    </div>
+
+    <script>
+        // Animação dos corações 
+        setInterval(() => {
+            const hearts = document.querySelectorAll('.heart');
+            hearts.forEach(heart => {
+                const randomDelay = Math.random() * 3;
+                heart.style.animationDelay = randomDelay + 's';
+            });
+        }, 8000);
+
+        // Efeito de pulsação nos cards
+        document.querySelectorAll('.photo-card, .music-card').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.animation = 'pulse 0.6s ease-in-out';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.animation = 'none';
+            });
+        });
+
+        // Efeito parallax 
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const parallax = document.querySelector('.floating-hearts');
+            if (parallax) {
+                const speed = scrolled * 0.3;
+                parallax.style.transform = `translateY(${speed}px)`;
+            }
+        });
+
+        // Sparkles ao clicar nos cards de foto
+        function createSparkle(x, y) {
+            const sparkle = document.createElement('div');
+            sparkle.innerHTML = '✨';
+            sparkle.style.position = 'fixed';
+            sparkle.style.left = x + 'px';
+            sparkle.style.top = y + 'px';
+            sparkle.style.pointerEvents = 'none';
+            sparkle.style.zIndex = '9999';
+            sparkle.style.animation = 'sparkleAnimation 1s ease-out forwards';
+            document.body.appendChild(sparkle);
+            
+            setTimeout(() => {
+                sparkle.remove();
+            }, 1000);
+        }
+
+        // Notas musicais ao clicar nos cards de música
+        function createMusicNote(x, y) {
+            const note = document.createElement('div');
+            const notes = ['🎵', '🎶', '🎼', '🎤', '🎧'];
+            note.innerHTML = notes[Math.floor(Math.random() * notes.length)];
+            note.style.position = 'fixed';
+            note.style.left = x + 'px';
+            note.style.top = y + 'px';
+            note.style.pointerEvents = 'none';
+            note.style.zIndex = '9999';
+            note.style.fontSize = '24px';
+            note.style.animation = 'musicNote 1.5s ease-out forwards';
+            document.body.appendChild(note);
+            
+            setTimeout(() => {
+                note.remove();
+            }, 1500);
+        }
+
+        // Adicionar sparkles ao clicar nos cards de foto
+        document.querySelectorAll('.photo-card').forEach(card => {
+            card.addEventListener('click', function(e) {
+                createSparkle(e.clientX, e.clientY);
+            });
+        });
+
+        // Adicionar notas musicais ao clicar nos cards de música
+        document.querySelectorAll('.music-card').forEach(card => {
+            card.addEventListener('click', function(e) {
+                createMusicNote(e.clientX, e.clientY);
+            });
+        });
+
+        // Efeito de hover nos cards de música
+        document.querySelectorAll('.music-card').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                const playButton = this.querySelector('.play-button');
+                if (playButton) {
+                    playButton.style.background = '#1ed760';
+                }
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                const playButton = this.querySelector('.play-button');
+                if (playButton) {
+                    playButton.style.background = '#1DB954';
+                }
+            });
+        });
+    </script>
+</body>
+</html> 
